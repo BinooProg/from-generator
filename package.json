@@ -12,6 +12,7 @@
     },
     "$schema": "https://www.schemastore.org/package.json",
     "private": true,
+    "packageManager": "bun@1.2.23",
     "scripts": {
         "dev": "bun run vite",
         "build": "bun run vite build"
