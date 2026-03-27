@@ -127,5 +127,11 @@
                 Create Your First Form
             </a>
         </section>
+
+        <footer class="pb-12 text-center text-sm text-neutral-600 dark:text-neutral-400">
+            <a href="{{ route('terms') }}" class="hover:underline">Terms of Service</a>
+            <span class="mx-2">|</span>
+            <a href="{{ route('privacy') }}" class="hover:underline">Privacy Policy</a>
+        </footer>
     </div>
 @endsection

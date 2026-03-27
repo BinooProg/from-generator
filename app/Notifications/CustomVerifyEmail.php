@@ -38,7 +38,7 @@ class CustomVerifyEmail extends VerifyEmail
         $verificationUrl = $this->verificationUrl($notifiable);
 
         return (new MailMessage)
-            ->subject('Verify Your Account - MyAwesomeApp')
+            ->subject('Verify Your Account - Form-generator')
             ->view('emails.custom-verify', [
                 'url' => $verificationUrl,
                 'user' => $notifiable

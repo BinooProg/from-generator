@@ -32,15 +32,12 @@
             border: 1px solid #e5e5e5;
         }
 
-        .email-header {
-            padding: 32px;
-            border-bottom: 1px solid #e5e5e5;
-        }
-
-        .logo {
+        .brand-label {
             font-size: 18px;
             font-weight: 600;
-            letter-spacing: -0.025em;
+            letter-spacing: -0.02em;
+            line-height: 1;
+            margin-bottom: 24px;
             color: #171717;
         }
 
@@ -74,8 +71,8 @@
         .button {
             display: inline-block;
             padding: 14px 32px;
-            background-color: #171717;
-            color: #ffffff;
+            background-color: #ffffff;
+            color: #171717;
             text-decoration: none;
             font-size: 14px;
             font-weight: 500;
@@ -85,8 +82,9 @@
         }
 
         .button:hover {
-            background-color: #262626;
-            border-color: #262626;
+            background-color: #f5f5f5;
+            border-color: #171717;
+            color: #171717;
         }
 
         .divider {
@@ -121,23 +119,9 @@
             font-weight: 300;
         }
 
-        .icon-box {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 48px;
-            height: 48px;
-            border: 2px solid #171717;
-            margin-bottom: 24px;
-        }
-
         @media only screen and (max-width: 600px) {
             .email-wrapper {
                 padding: 20px 10px;
-            }
-
-            .email-header {
-                padding: 24px 20px;
             }
 
             .email-body {
@@ -163,20 +147,12 @@
 <body>
     <div class="email-wrapper">
         <div class="email-container">
-            <!-- Header -->
-            <div class="email-header">
-                <div class="logo">FORM / GENERATOR</div>
-            </div>
-
             <!-- Body -->
             <div class="email-body">
-                <div class="icon-box">
-                    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                    </svg>
-                </div>
+                <p class="brand-label"
+                    style="font-size: 18px; font-weight: 600; letter-spacing: -0.02em; line-height: 1; margin-bottom: 24px; color: #171717;">
+                    Form Generator
+                </p>
 
                 <h1 class="heading">
                     Verify your <strong>email address</strong>
@@ -188,7 +164,8 @@
                 </p>
 
                 <div class="button-container">
-                    <a href="{{ $url }}" class="button">
+                    <a href="{{ $url }}" class="button"
+                        style="display: inline-block; padding: 14px 32px; background-color: #ffffff; color: #171717 !important; text-decoration: none; font-size: 14px; font-weight: 600; letter-spacing: 0.01em; border: 2px solid #171717;">
                         Verify Email Address
                     </a>
                 </div>
