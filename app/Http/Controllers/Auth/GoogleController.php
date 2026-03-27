@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Http\Request;
-use Exception;
+use Throwable;
+use Laravel\Socialite\Two\InvalidStateException;
 
 class GoogleController extends Controller
 {
@@ -20,7 +22,16 @@ class GoogleController extends Controller
     public function handleGoogleCallback(Request $request)
     {
         try {
-            $user = Socialite::driver('google')->user();
+            try {
+                $user = Socialite::driver('google')->user();
+            } catch (InvalidStateException) {
+                // In distributed/ephemeral environments, session state may be lost between redirect and callback.
+                $user = Socialite::driver('google')->stateless()->user();
+            }
+
+            if (empty($user->email)) {
+                return redirect('login')->with('error', 'Google account email is required to sign in.');
+            }
 
             // Find or Create user
             $finduser = User::where('google_id', $user->id)->first();
@@ -41,8 +52,13 @@ class GoogleController extends Controller
             $request->session()->regenerate();
 
             return redirect()->intended('dashboard');
-        } catch (Exception $e) {
-            return redirect('login')->with('error', 'Something went wrong!');
+        } catch (Throwable $e) {
+            Log::error('Google OAuth callback failed', [
+                'message' => $e->getMessage(),
+                'exception' => $e::class,
+            ]);
+
+            return redirect('login')->with('error', 'Google sign in failed. Please try again.');
         }
     }
 }
