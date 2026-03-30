@@ -88,9 +88,10 @@ Update your `.env` with the values for your environment.
 - `MAIL_MAILER`
 - `MAIL_HOST`
 - `MAIL_PORT`
+- `MAIL_SCHEME` (preferred, e.g. `tls`)
 - `MAIL_USERNAME`
 - `MAIL_PASSWORD`
-- `MAIL_ENCRYPTION`
+- `MAIL_ENCRYPTION` (legacy alias, optional)
 - `MAIL_FROM_ADDRESS`
 - `MAIL_FROM_NAME`
 - `RESEND_KEY` (when using Resend mail transport)
@@ -102,6 +103,18 @@ For Resend API transport, use:
 - `MAIL_FROM_ADDRESS=<verified-sender@yourdomain.com>`
 
 If your environment only provides `RESEND_API_KEY`, this project supports it as a fallback.
+
+For Brevo SMTP in production (Railway), typical values are:
+
+- `MAIL_MAILER=smtp`
+- `MAIL_HOST=smtp-relay.brevo.com`
+- `MAIL_PORT=587`
+- `MAIL_SCHEME=smtp` (or omit it)
+- `MAIL_USERNAME=<your-brevo-login>`
+- `MAIL_PASSWORD=<your-brevo-smtp-key>`
+- `MAIL_FROM_ADDRESS=<verified-sender@yourdomain.com>`
+
+If you use port `465`, set `MAIL_SCHEME=smtps`.
 
 ### Google OAuth (optional)
 
@@ -149,6 +162,7 @@ php artisan storage:link
 ## Deployment Notes
 
 - Set `APP_ENV=production` and `APP_DEBUG=false`.
+- Ensure `MAIL_MAILER=smtp` is set in Railway variables (otherwise Laravel defaults to `log`).
 - Configure a real queue worker (for example, Horizon or Supervisor-managed worker).
 - Configure mail provider credentials in production.
 - Ensure OAuth callback URLs match your production domain.

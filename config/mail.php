@@ -39,7 +39,12 @@ return [
 
         'smtp' => [
             'transport' => 'smtp',
-            'scheme' => env('MAIL_SCHEME'),
+            // Normalize legacy encryption values to Symfony-supported schemes.
+            'scheme' => match (strtolower((string) env('MAIL_SCHEME', env('MAIL_ENCRYPTION', '')))) {
+                'tls', 'starttls', 'smtp', '' => 'smtp',
+                'ssl', 'smtps' => 'smtps',
+                default => env('MAIL_SCHEME', env('MAIL_ENCRYPTION')),
+            },
             'url' => env('MAIL_URL'),
             'host' => env('MAIL_HOST', '127.0.0.1'),
             'port' => env('MAIL_PORT', 2525),
